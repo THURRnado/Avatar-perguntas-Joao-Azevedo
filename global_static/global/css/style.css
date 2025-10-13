@@ -1,0 +1,54 @@
+body {
+    background-image: url('/static/global/img/fundo.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    color: #000;
+}
+
+.filtro-genero{
+    background: rgba(107, 134, 141, 0.6);
+    backdrop-filter: blur(10px);
+}
+
+.btn-filtro-genero {
+    color: #000; /* cor do texto */
+    border: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.btn-filtro-genero:hover {
+    background: linear-gradient(135deg, #13618bff, #000000);
+    transform: scale(1.05);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    color: #fff;
+}
+
+.card-question {
+    background: rgba(107, 134, 141, 0.6);
+    backdrop-filter: blur(10px);
+    border: none;
+    margin-bottom: 30px;
+}
+
+.card-title {
+    color: #000;
+}
+
+.btn-choice {
+    min-width: 80px;
+}
+
+.btn-gradient {
+    background: linear-gradient(135deg, #13618bff, #000000);
+    color: #fff; /* cor do texto */
+    border: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.btn-gradient:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    color: #000000ff;
+}

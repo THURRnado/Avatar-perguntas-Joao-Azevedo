@@ -1,5 +1,7 @@
 from django.shortcuts import render
+from .models import Pergunta
 
-# Create your views here.
+
 def teste(request):
-    return render(request, 'pergunta/index.html', {})
+    pergunta = Pergunta.objects.filter(ativo=True).order_by('-vezes_respondida')
+    return render(request, 'pergunta/index.html', {'pergunta': pergunta})
