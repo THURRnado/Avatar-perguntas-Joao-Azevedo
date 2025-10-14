@@ -25,6 +25,13 @@ body {
     color: #fff;
 }
 
+.btn-filtro-genero.active {
+    background: linear-gradient(135deg, #13618bff, #000000);
+    color: #fff;
+    box-shadow: 0 0 10px rgba(0,0,0,0.4);
+    transform: scale(1.02);
+}
+
 .card-question {
     background: rgba(107, 134, 141, 0.6);
     backdrop-filter: blur(10px);

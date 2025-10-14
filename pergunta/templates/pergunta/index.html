@@ -16,11 +16,12 @@
 
             <div class="mb-4 text-center">
                 <div class="btn-group filtro-genero" role="group" aria-label="Filtro de gênero">
-                    <button class="btn btn-outline-dark btn-filtro-genero" onclick="filtrarGenero('todos')">Todos</button>
-                    <button class="btn btn-outline-dark btn-filtro-genero" onclick="filtrarGenero('projetos')">Projetos</button>
-                    <button class="btn btn-outline-dark btn-filtro-genero" onclick="filtrarGenero('pessoal')">Pessoal</button>
+                    <a href="{% url 'home' %}" class="btn btn-outline-dark btn-filtro-genero {% if genero == 'todos' %}active{% endif %}">Todos</a>
+                    <a href="{% url 'filtro_genero' 'PRO' %}" class="btn btn-outline-dark btn-filtro-genero {% if genero == 'PRO' %}active{% endif %}">Projetos</a>
+                    <a href="{% url 'filtro_genero' 'PES' %}" class="btn btn-outline-dark btn-filtro-genero {% if genero == 'PES' %}active{% endif %}">Pessoal</a>
                 </div>
             </div>
+
 
             <div class="row mt-5">
                 {% for p in pergunta %}
