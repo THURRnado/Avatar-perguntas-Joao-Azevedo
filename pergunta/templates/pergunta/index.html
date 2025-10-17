@@ -11,14 +11,43 @@
     </head>
     <body>
 
+        <!-- Tela de carregamento -->
+        <div id="loading-screen" class="loading-screen">
+            <div class="loader" id="loader">
+                <div class="loader-wrapper">
+                    <span class="loader-letter">C</span>
+                    <span class="loader-letter">a</span>
+                    <span class="loader-letter">r</span>
+                    <span class="loader-letter">r</span>
+                    <span class="loader-letter">g</span>
+                    <span class="loader-letter">a</span>
+                    <span class="loader-letter">n</span>
+                    <span class="loader-letter">d</span>
+                    <span class="loader-letter">o</span>
+                    <span class="loader-letter">.</span>
+                    <span class="loader-letter">.</span>
+                    <span class="loader-letter">.</span>
+                    <span class="loader-letter"></span>
+                    <div class="loader-circle"></div>
+                </div>
+            </div>
+        </div>
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+
+
         <div class="container py-5">
             <h1 class="mb-4 text-center">Escolha uma pergunta</h1>
 
             <div class="mb-4 text-center">
                 <div class="btn-group filtro-genero" role="group" aria-label="Filtro de gênero">
-                    <a href="{% url 'home' %}" class="btn btn-outline-dark btn-filtro-genero {% if genero == 'todos' %}active{% endif %}">Todos</a>
-                    <a href="{% url 'filtro_genero' 'PRO' %}" class="btn btn-outline-dark btn-filtro-genero {% if genero == 'PRO' %}active{% endif %}">Projetos</a>
-                    <a href="{% url 'filtro_genero' 'PES' %}" class="btn btn-outline-dark btn-filtro-genero {% if genero == 'PES' %}active{% endif %}">Pessoal</a>
+                    <a onclick="loading('{% url 'home' %}')" class="btn btn-outline-dark btn-filtro-genero {% if genero == 'todos' %}active{% endif %}">Todos</a>
+                    <a onclick="loading('{% url 'filtro_genero' 'PRO' %}')" class="btn btn-outline-dark btn-filtro-genero {% if genero == 'PRO' %}active{% endif %}">Projetos</a>
+                    <a onclick="loading('{% url 'filtro_genero' 'PES' %}')" class="btn btn-outline-dark btn-filtro-genero {% if genero == 'PES' %}active{% endif %}">Pessoal</a>
                 </div>
             </div>
 
@@ -32,7 +61,7 @@
                         </div>
                         <div class="card-footer">
                             <div class="d-flex flex-wrap gap-2">
-                                <button class="btn btn-sm btn-gradient btn-choice">
+                                <button class="btn btn-sm btn-gradient btn-choice" onclick="loading('{% url 'escolher' p.pk %}')">
                                     Escolher
                                 </button>
                             </div>
@@ -44,6 +73,7 @@
         </div>
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="{% static 'global/js/scripts.js' %}"></script>
 
     </body>
 </html>
