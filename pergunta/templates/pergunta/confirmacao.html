@@ -1,0 +1,7 @@
+<!-- exemplo: confirmacao.html -->
+<h3>Responda aqui</h3>
+<form method="post" action="{% url 'confirmar_pergunta' %}">
+    {% csrf_token %}
+    <button name="resposta" value="sim">Sim</button>
+    <button name="resposta" value="nao">Não</button>
+</form>
