@@ -7,3 +7,16 @@ function loading(url) {
         window.location.href = url;
     }, 200);
 }
+
+
+document.addEventListener("DOMContentLoaded", () => {
+    const alerts = document.querySelectorAll(".alert-message");
+    alerts.forEach(alert => {
+        setTimeout(() => {
+            alert.style.transition = "opacity 0.6s, transform 0.6s";
+            alert.style.opacity = "0";
+            alert.style.transform = "translateY(-10px)";
+            setTimeout(() => alert.remove(), 600);
+        }, 4000);
+    });
+});

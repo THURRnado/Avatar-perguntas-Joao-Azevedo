@@ -34,11 +34,14 @@
         </div>
 
         {% if messages %}
-            {% for message in messages %}
-                <div class="alert">{{ message }}</div>
-            {% endfor %}
+            <div class="messages-container position-fixed top-0 start-50 translate-middle-x mt-3" style="z-index: 1050;">
+                {% for message in messages %}
+                    <div class="alert-message alert-{{ message.tags }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
         {% endif %}
-
 
         <div class="container py-5">
             <h1 class="mb-4 text-center">Escolha uma pergunta</h1>
@@ -46,8 +49,9 @@
             <div class="mb-4 text-center">
                 <div class="btn-group filtro-genero" role="group" aria-label="Filtro de gênero">
                     <a onclick="loading('{% url 'home' %}')" class="btn btn-outline-dark btn-filtro-genero {% if genero == 'todos' %}active{% endif %}">Todos</a>
-                    <a onclick="loading('{% url 'filtro_genero' 'PRO' %}')" class="btn btn-outline-dark btn-filtro-genero {% if genero == 'PRO' %}active{% endif %}">Projetos</a>
-                    <a onclick="loading('{% url 'filtro_genero' 'PES' %}')" class="btn btn-outline-dark btn-filtro-genero {% if genero == 'PES' %}active{% endif %}">Pessoal</a>
+                    <a onclick="loading('{% url 'filtro_genero' 'BIO' %}')" class="btn btn-outline-dark btn-filtro-genero {% if genero == 'BIO' %}active{% endif %}">Biografia</a>
+                    <a onclick="loading('{% url 'filtro_genero' 'OBR' %}')" class="btn btn-outline-dark btn-filtro-genero {% if genero == 'OBR' %}active{% endif %}">Obras</a>
+                    <a onclick="loading('{% url 'filtro_genero' 'ACO' %}')" class="btn btn-outline-dark btn-filtro-genero {% if genero == 'ACO' %}active{% endif %}">Ações do governo</a>
                 </div>
             </div>
 

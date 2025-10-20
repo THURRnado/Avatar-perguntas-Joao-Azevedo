@@ -8,8 +8,9 @@ class Pergunta(models.Model):
     modificado_em = models.DateTimeField(auto_now=True)
 
     GENEROS = [
-        ('PES', 'Pessoal'),
-        ('PRO', 'Projetos'),
+        ('BIO', 'Biografia'),
+        ('OBR', 'Obras'),
+        ('ACO', 'Ações do governo'),
     ]
     genero = models.CharField(max_length=3, choices=GENEROS, default='PES')
 
