@@ -28,12 +28,12 @@ def escolher(request, pk):
     # Envia para Flask para que o avatar pergunte a confirmação
     try:
         response = requests.post(
-            "http://localhost:5000/falar",
+            "http://localhost:5000/escolha",
             json={"texto": texto},
             timeout=5
         )
         if response.status_code != 200:
-            messages.error(request, "Erro ao enviar para o avatar.")
+            messages.error(request, "Erro ao se comunicar com o avatar.")
     except requests.exceptions.RequestException as e:
         print(f"[Django] Erro ao conectar com Flask: {e}")
         messages.error(request, "Não foi possível se comunicar com o avatar.")
@@ -52,10 +52,9 @@ def confirmar_pergunta(request):
             return redirect('home')
 
         if resposta == "sim":
-            # Envia a pergunta final para o Flask
             try:
                 response = requests.post(
-                    "http://localhost:5000/falar_final",
+                    "http://localhost:5000/responder",
                     json={"texto": pergunta},
                     timeout=5
                 )
@@ -67,7 +66,6 @@ def confirmar_pergunta(request):
                 print(f"[Django] Erro ao conectar com Flask: {e}")
                 messages.error(request, "Não foi possível se comunicar com o avatar.")
 
-        # Limpa a sessão
         request.session.pop('pergunta_confirmar', None)
         return redirect('home')
 
@@ -78,6 +76,5 @@ def avatar_retorno(request):
         data = json.loads(request.body)
         mensagem = data.get("mensagem", "")
         print(f"[Django] Retorno do Flask: {mensagem}")
-        # Aqui você pode atualizar o banco, enviar WebSocket, etc.
         return JsonResponse({"status": "ok"})
     return JsonResponse({"erro": "Método não permitido"}, status=405)
