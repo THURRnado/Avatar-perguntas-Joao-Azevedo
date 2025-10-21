@@ -5,6 +5,7 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
 import requests
+from time import sleep
 
 
 def home(request):
@@ -22,24 +23,30 @@ def escolher(request, pk):
     texto = pergunta.texto
     print(f"[Django] Pergunta escolhida: {texto}")
 
-    # Armazena na sessão para confirmação posterior
     request.session['pergunta_confirmar'] = texto
 
-    # Envia para Flask para que o avatar pergunte a confirmação
     try:
         response = requests.post(
             "http://localhost:5000/escolha",
             json={"texto": texto},
-            timeout=5
+            timeout=15
         )
-        if response.status_code != 200:
-            messages.error(request, "Erro ao se comunicar com o avatar.")
+        if response.status_code == 200:
+            data = response.json()
+            if data.get("status") == "ok":
+                sleep(7)
+                return render(request, 'pergunta/confirmacao.html', {'pergunta': texto})
+            else:
+                messages.error(request, "O avatar não confirmou a pergunta.")
+        else:
+            messages.error(request, f"Erro no avatar: status {response.status_code}")
+
     except requests.exceptions.RequestException as e:
         print(f"[Django] Erro ao conectar com Flask: {e}")
         messages.error(request, "Não foi possível se comunicar com o avatar.")
 
-    # Renderiza página de confirmação
-    return render(request, 'pergunta/confirmacao.html', {'pergunta': texto})
+    # Se der problema, redireciona para lista de perguntas
+    return redirect('home')
 
 
 def confirmar_pergunta(request):
@@ -59,7 +66,12 @@ def confirmar_pergunta(request):
                     timeout=5
                 )
                 if response.status_code == 200:
-                    messages.success(request, "Pergunta enviada ao avatar com sucesso!")
+                    data = response.json()
+                    if data.get("status") == "ok":
+                        sleep(7)
+                        return redirect('home')
+                    else:
+                        messages.error(request, "O avatar não confirmou a pergunta.")
                 else:
                     messages.error(request, f"Erro ao enviar ao avatar: {response.text}")
             except requests.exceptions.RequestException as e:
