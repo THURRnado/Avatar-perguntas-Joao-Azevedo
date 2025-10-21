@@ -1,0 +1,41 @@
+body, html {
+    height: 100%;
+    margin: 0;
+}
+
+.central-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+}
+
+.card-question {
+    border: none;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    border-radius: 12px;
+    padding: 2rem;
+    background: rgba(107, 134, 141, 0.6);
+}
+
+.btn-choice {
+    min-width: 100px;
+    border-radius: 14px;
+    font-size:32px;
+    padding: 10px 20px;
+    font-weight: 600;
+}
+
+.btn-gradient {
+    background: linear-gradient(135deg, #13618b, #000);
+    color: #fff;
+    border: none;
+    transition: transform 0.2s ease;
+}
+
+.btn-gradient:hover {
+    transform: scale(1.05);
+    color: #fff;
+}

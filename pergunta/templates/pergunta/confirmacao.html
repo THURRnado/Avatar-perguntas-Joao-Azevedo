@@ -1,7 +1,65 @@
-<!-- exemplo: confirmacao.html -->
-<h3>Responda aqui</h3>
-<form method="post" action="{% url 'confirmar_pergunta' %}">
-    {% csrf_token %}
-    <button name="resposta" value="sim">Sim</button>
-    <button name="resposta" value="nao">Não</button>
-</form>
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perguntas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'global/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'global/css/confirmacao.css' %}">
+</head>
+<body>
+
+    <div id="loading-screen" class="loading-screen">
+        <div class="loader" id="loader">
+            <div class="loader-wrapper">
+                <span class="loader-letter">P</span>
+                <span class="loader-letter">r</span>
+                <span class="loader-letter">o</span>
+                <span class="loader-letter">c</span>
+                <span class="loader-letter">e</span>
+                <span class="loader-letter">s</span>
+                <span class="loader-letter">s</span>
+                <span class="loader-letter">a</span>
+                <span class="loader-letter">n</span>
+                <span class="loader-letter">d</span>
+                <span class="loader-letter">o</span>
+                <span class="loader-letter">.</span>
+                <span class="loader-letter">.</span>
+                <div class="loader-circle">.</div>
+            </div>
+        </div>
+    </div>
+
+    {% if messages %}
+        <div class="messages-container position-fixed top-0 start-50 translate-middle-x mt-3" style="z-index: 1050;">
+            {% for message in messages %}
+                <div class="alert-message alert-{{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <div class="central-container">
+        <h1 class="mb-4">Responda aqui</h1>
+
+        <form method="post" action="{% url 'confirmar_pergunta' %}" onsubmit="loading()">
+            {% csrf_token %}
+            <div class="card card-question">
+                <div class="card-body">
+                    <div class="d-flex justify-content-center gap-3 flex-wrap">
+                        <button class="btn btn-sm btn-gradient btn-choice" name="resposta" value="sim">Sim</button>
+                        <button class="btn btn-sm btn-gradient btn-choice" name="resposta" value="nao">Não</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{% static 'global/js/scripts.js' %}"></script>
+</body>
+</html>

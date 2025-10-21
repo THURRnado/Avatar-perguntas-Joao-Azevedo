@@ -3,9 +3,12 @@ function loading(url) {
     if (loadingScreen) {
         loadingScreen.classList.add("active");
     }
-    setTimeout(() => {
-        window.location.href = url;
-    }, 200);
+
+    if (url) {
+        setTimeout(() => {
+            window.location.href = url;
+        }, 200);
+    }
 }
 
 
