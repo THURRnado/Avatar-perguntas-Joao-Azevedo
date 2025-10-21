@@ -5,7 +5,6 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
 import requests
-from time import sleep
 
 
 def home(request):
@@ -29,12 +28,11 @@ def escolher(request, pk):
         response = requests.post(
             "http://localhost:5000/escolha",
             json={"texto": texto},
-            timeout=15
+            timeout=30
         )
         if response.status_code == 200:
             data = response.json()
             if data.get("status") == "ok":
-                sleep(7)
                 return render(request, 'pergunta/confirmacao.html', {'pergunta': texto})
             else:
                 messages.error(request, "O avatar não confirmou a pergunta.")
@@ -45,7 +43,6 @@ def escolher(request, pk):
         print(f"[Django] Erro ao conectar com Flask: {e}")
         messages.error(request, "Não foi possível se comunicar com o avatar.")
 
-    # Se der problema, redireciona para lista de perguntas
     return redirect('home')
 
 
@@ -63,12 +60,11 @@ def confirmar_pergunta(request):
                 response = requests.post(
                     "http://localhost:5000/responder",
                     json={"texto": pergunta},
-                    timeout=5
+                    timeout=30
                 )
                 if response.status_code == 200:
                     data = response.json()
                     if data.get("status") == "ok":
-                        sleep(7)
                         return redirect('home')
                     else:
                         messages.error(request, "O avatar não confirmou a pergunta.")
