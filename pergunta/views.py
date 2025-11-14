@@ -9,7 +9,7 @@ from django.views.decorators.csrf import csrf_exempt
 from .models import Pergunta
 import requests
 
-IA_OUTPUT_DIR = os.path.join(settings.BASE_DIR, "ia_avatar_output")
+IA_OUTPUT_DIR = os.getenv('IA_OUTPUT_DIR')
 os.makedirs(IA_OUTPUT_DIR, exist_ok=True)
 
 
@@ -35,7 +35,7 @@ def escolher(request, pk):
     try:
         # Envia para o Avatar (Flask) apenas para ele FALAR a pergunta
         response = requests.post(
-            "http://localhost:5000/escolha",
+            os.getenv('URL_AVATAR_ESCOLHA'),
             json={"texto": texto},
             timeout=30
         )
@@ -105,7 +105,7 @@ def confirmar_pergunta(request):
     print("[Django] Aguardando READY_AVATAR.signal...")
 
     signal_path = os.path.join(IA_OUTPUT_DIR, "READY_AVATAR.signal")
-    pergunta_json_path = os.path.join(IA_OUTPUT_DIR, "pergunta.json")
+    resposta_json_path = os.path.join(IA_OUTPUT_DIR, "resposta.json")
 
     timeout = 60
     start_time = time.time()
@@ -120,9 +120,9 @@ def confirmar_pergunta(request):
     print("[Django] Sinal detectado! Lendo arquivos gerados...")
 
     try:
-        with open(pergunta_json_path, "r", encoding="utf-8") as f:
+        with open(resposta_json_path, "r", encoding="utf-8") as f:
             data = json.load(f)
-            pergunta = data.get("texto", "Pergunta desconhecida")
+            resposta = data.get("texto", "resposta desconhecida")
 
         # Lê arquivos de áudio (resposta)
         #wav_files = [f for f in os.listdir(IA_OUTPUT_DIR) if f.endswith(".wav")]
@@ -130,8 +130,8 @@ def confirmar_pergunta(request):
 
         # Chama o avatar para tocar/falar a resposta final
         response = requests.post(
-            "http://localhost:5000/responder",
-            json={"texto": pergunta},
+            os.getenv('URL_AVATAR_RESPONDER'),
+            json={"texto": resposta},
             timeout=30
         )
         if response.status_code == 200:
@@ -153,8 +153,8 @@ def confirmar_pergunta(request):
             os.remove(signal_path)
             print("[Django] Sinal removido.")
 
-        if os.path.exists(pergunta_json_path):
-            os.remove(pergunta_json_path)
+        if os.path.exists(resposta_json_path):
+            os.remove(resposta_json_path)
             print("[Django] Pergunta removida.")
 
     # Limpa a sessão
