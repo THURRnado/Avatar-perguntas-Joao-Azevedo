@@ -10,7 +10,6 @@ from .models import Pergunta
 import requests
 
 IA_OUTPUT_DIR = os.getenv('IA_OUTPUT_DIR')
-os.makedirs(IA_OUTPUT_DIR, exist_ok=True)
 
 
 def home(request):
