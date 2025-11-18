@@ -10,6 +10,7 @@ from .models import Pergunta
 import requests
 
 IA_OUTPUT_DIR = os.getenv('IA_OUTPUT_DIR')
+IA_INPUT_DIR = os.getenv('IA_INPUT_DIR')
 
 
 def home(request):
@@ -80,8 +81,8 @@ def comunicacao_ia(request):
         return redirect('home')
 
     # Se chegou aqui, a resposta foi "sim"
-    pergunta_json_path = os.path.join(IA_OUTPUT_DIR, "pergunta.json")
-    signal_path = os.path.join(IA_OUTPUT_DIR, "READY_AVATAR.signal")
+    pergunta_json_path = os.path.join(IA_INPUT_DIR, "pergunta.json")
+    signal_path = os.path.join(IA_INPUT_DIR, "ASK_TEXT.signal")
 
     # Cria o arquivo JSON para o backend_ia
     with open(pergunta_json_path, "w", encoding="utf-8") as f:
