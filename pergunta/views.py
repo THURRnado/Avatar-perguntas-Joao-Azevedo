@@ -107,6 +107,10 @@ def confirmar_pergunta(request):
     signal_path = os.path.join(IA_OUTPUT_DIR, "READY_AVATAR.signal")
     resposta_json_path = os.path.join(IA_OUTPUT_DIR, "resposta.json")
 
+    if not signal_path:
+        messages.error(request, "Pasta especificada para o signal não encontrada.")
+        return redirect('home')
+
     timeout = 60
     start_time = time.time()
 
