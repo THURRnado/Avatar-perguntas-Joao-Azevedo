@@ -111,7 +111,7 @@ def confirmar_pergunta(request):
         messages.error(request, "Pasta especificada para o signal não encontrada.")
         return redirect('home')
 
-    timeout = 60
+    timeout = 120
     start_time = time.time()
 
     while not os.path.exists(signal_path):
