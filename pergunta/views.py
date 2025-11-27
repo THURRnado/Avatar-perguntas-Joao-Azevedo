@@ -157,10 +157,6 @@ def confirmar_pergunta(request):
             os.remove(signal_path)
             print("[Django] Sinal removido.")
 
-        if os.path.exists(resposta_json_path):
-            os.remove(resposta_json_path)
-            print("[Django] Pergunta removida.")
-
     # Limpa a sessão
     request.session.pop('pergunta_confirmar', None)
     return redirect('home')
