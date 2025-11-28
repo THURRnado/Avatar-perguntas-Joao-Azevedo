@@ -131,7 +131,7 @@ def confirmar_pergunta(request):
         with open(resposta_json_path, "r", encoding="utf-8") as f:
             data = json.load(f)
             print("O QUE TEM NO JSON: ",data)
-            resposta = data.get("texto", "resposta desconhecida")
+            resposta = data.get("resposta", "resposta desconhecida")
 
         # Lê arquivos de áudio (resposta)
         #wav_files = [f for f in os.listdir(IA_OUTPUT_DIR) if f.endswith(".wav")]
