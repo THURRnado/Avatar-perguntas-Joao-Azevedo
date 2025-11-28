@@ -85,8 +85,11 @@ def comunicacao_ia(request):
     signal_path = os.path.join(IA_INPUT_DIR, "ASK_TEXT.signal")
 
     # Cria o JSON
+    json_str = json.dumps({"texto": pergunta}, ensure_ascii=False, indent=2)
+
     with open(pergunta_json_path, "w", encoding="utf-8") as f:
-        json.dump({"texto": pergunta}, f, ensure_ascii=False, indent=2)
+        f.write(json_str)
+
 
     # Cria o arquivo-sinal
     with open(signal_path, "w", encoding="utf-8") as f:
