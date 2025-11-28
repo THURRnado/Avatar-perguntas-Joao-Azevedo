@@ -130,6 +130,7 @@ def confirmar_pergunta(request):
     try:
         with open(resposta_json_path, "r", encoding="utf-8") as f:
             data = json.load(f)
+            print("O QUE TEM NO JSON: ",data)
             resposta = data.get("texto", "resposta desconhecida")
 
         # Lê arquivos de áudio (resposta)
