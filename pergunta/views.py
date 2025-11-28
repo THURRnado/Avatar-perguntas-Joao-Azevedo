@@ -84,12 +84,13 @@ def comunicacao_ia(request):
     pergunta_json_path = os.path.join(IA_INPUT_DIR, "pergunta.json")
     signal_path = os.path.join(IA_INPUT_DIR, "ASK_TEXT.signal")
 
-    # Cria o arquivo JSON para o backend_ia
+    # Cria o JSON
     with open(pergunta_json_path, "w", encoding="utf-8") as f:
-        json.dump({"texto": pergunta}, f)
+        json.dump({"texto": pergunta}, f, ensure_ascii=False, indent=2)
 
+    # Cria o arquivo-sinal
     with open(signal_path, "w", encoding="utf-8") as f:
-        f.write("READY") 
+        f.write("READY")
 
     print(f"[Django] Arquivo JSON criado: {pergunta_json_path}")
 
