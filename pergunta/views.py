@@ -86,7 +86,7 @@ def comunicacao_ia(request):
 
     # Cria o arquivo JSON para o backend_ia
     with open(pergunta_json_path, "w", encoding="utf-8") as f:
-        json.dump({"texto": pergunta}, f, ensure_ascii=True, indent=4)
+        json.dump({"texto": pergunta}, f)
 
     with open(signal_path, "w", encoding="utf-8") as f:
         f.write("READY") 
