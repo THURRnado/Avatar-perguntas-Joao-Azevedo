@@ -110,12 +110,13 @@ def confirmar_pergunta(request):
 
     signal_path = os.path.join(IA_OUTPUT_DIR, "READY_AVATAR.signal")
     resposta_json_path = os.path.join(IA_OUTPUT_DIR, "resposta.json")
+    resposta_audio_path = os.path.join(IA_OUTPUT_DIR, "resposta.wav")
 
     if not signal_path:
         messages.error(request, "Pasta especificada para o signal não encontrada.")
         return redirect('home')
 
-    timeout = 120
+    timeout = 240
     start_time = time.time()
 
     while not os.path.exists(signal_path):
@@ -134,13 +135,24 @@ def confirmar_pergunta(request):
             resposta = data.get("resposta", "resposta desconhecida")
 
         # Lê arquivos de áudio (resposta)
-        #wav_files = [f for f in os.listdir(IA_OUTPUT_DIR) if f.endswith(".wav")]
-        #print(f"[Django] Arquivos de áudio: {wav_files}")
+        wav_file = next((f for f in os.listdir(IA_OUTPUT_DIR) if f.endswith(".wav")), None)
 
-        # Chama o avatar para tocar/falar a resposta final
+        files = None
+
+        if wav_file:
+            caminho_audio = os.path.join(IA_OUTPUT_DIR, wav_file)
+            files = {
+                "audio": open(caminho_audio, "rb")  # arquivo .wav
+            }
+
+        data = {
+            "texto": resposta
+        }
+
         response = requests.post(
             os.getenv('URL_AVATAR_RESPONDER'),
-            json={"texto": resposta},
+            data=data,
+            files=files,
             timeout=30
         )
         if response.status_code == 200:
@@ -160,6 +172,7 @@ def confirmar_pergunta(request):
         # Remove o sinal para o próximo ciclo
         if os.path.exists(signal_path):
             os.remove(signal_path)
+            os.remove(resposta_audio_path)
             print("[Django] Sinal removido.")
 
     # Limpa a sessão
